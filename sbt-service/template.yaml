@@ -25,7 +25,7 @@ spec:
           description: Unique name of the component
           ui:field: EntityNamePicker
         scala_package_name:
-          title: scala Package Name
+          title: Scala Package Name
           type: string
           description: Name for the scala package. eg (io.backstage.blah)
         description:

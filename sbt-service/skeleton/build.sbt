@@ -1,4 +1,4 @@
-name := ${{values.artifact_id}}
+name := "${{values.artifact_id}}"
 
 version := "1.0"
 
