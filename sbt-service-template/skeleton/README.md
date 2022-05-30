@@ -1,3 +1,3 @@
 # sbt-service
 
-backstage template for sbt service
+scala sbt microservice
