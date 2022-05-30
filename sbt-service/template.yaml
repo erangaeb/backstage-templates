@@ -7,7 +7,6 @@ metadata:
   tags:
     - recommended
     - scala
-    - grpc
 spec:
   owner: service@example.com
   type: service
