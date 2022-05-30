@@ -17,17 +17,17 @@ spec:
       required:
         - component_id
         - owner
-        - java_package_name
+        - scala_package_name
       properties:
         component_id:
           title: Name
           type: string
           description: Unique name of the component
           ui:field: EntityNamePicker
-        java_package_name:
-          title: Java Package Name
+        scala_package_name:
+          title: scala Package Name
           type: string
-          description: Name for the java package. eg (io.backstage.blah)
+          description: Name for the scala package. eg (io.backstage.blah)
         description:
           title: Description
           type: string
@@ -64,7 +64,7 @@ spec:
           component_id: ${{ parameters.component_id }}
           description: ${{ parameters.description }}
           artifact_id: ${{ parameters.component_id }}
-          java_package_name: ${{ parameters.java_package_name }}
+          scala_package_name: ${{ parameters.scala_package_name }}
           owner: ${{ parameters.owner }}
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
           http_port: 8080
