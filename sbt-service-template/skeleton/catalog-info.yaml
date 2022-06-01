@@ -12,3 +12,7 @@ spec:
   type: service
   lifecycle: experimental
   owner: ${{values.owner | dump}}
+  {%- if values.providesApi %}
+  providesApis:
+    - ${{values.providesApi | dump}}
+  {%- endif %}

@@ -73,6 +73,7 @@ spec:
           scala_package_name: ${{ parameters.scala_package_name }}
           owner: ${{ parameters.owner }}
           destination: ${{ parameters.repoUrl | parseRepoUrl }}
+          providesApi: ${{ parameters.consumesApi }}
           http_port: 8080
 
     - id: publish
