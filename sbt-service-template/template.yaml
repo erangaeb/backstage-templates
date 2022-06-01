@@ -51,6 +51,13 @@ spec:
             allowedHosts:
               - github.com
 
+    - title: Choose consuming api
+      properties:
+        consumesApi:
+          title: Consumes API
+          type: string
+          description: This service consumes api spec.
+
   steps:
     - id: template
       name: Fetch Skeleton + Template
