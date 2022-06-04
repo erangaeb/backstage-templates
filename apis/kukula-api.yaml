@@ -5,7 +5,7 @@ metadata:
   description: kukula gRPC
 spec:
   type: grpc
-  lifecycle: deprecated
+  lifecycle: experimental
   owner: kingfisher
   definition: |
     // Copyright 2015 gRPC authors.
