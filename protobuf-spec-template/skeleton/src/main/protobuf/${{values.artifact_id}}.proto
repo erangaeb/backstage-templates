@@ -1,0 +1,258 @@
+package com.pagero.services.documentstorage.spec;
+
+import "commons-def.proto";
+import "document-def.proto";
+import "party-def.proto";
+
+enum Encoding {
+    CREATE_DOCUMENT_MESSAGE = 1;
+    CREATE_DOCUMENT_REPLY = 2;
+    CREATE_DOCUMENT_EVENT_MESSAGE = 3;
+    CREATE_DOCUMENT_EVENT_REPLY = 4;
+    SEARCH_DOCUMENT_MESSAGE = 5;
+    SEARCH_DOCUMENT_REPLY = 6;
+    SEARCH_DOCUMENT_REQUEST = 7;
+    SEARCH_DOCUMENT_RESPONSE = 8;
+    GET_DOCUMENT_REQUEST = 9;
+    GET_DOCUMENT_RESPONSE = 10;
+    GET_DOCUMENT_PAYLOAD_REQUEST = 11;
+    GET_DOCUMENT_PAYLOAD_RESPONSE = 12;
+    GET_ATTACHMENT_METADATA_REQUEST = 13;
+    GET_ATTACHMENT_METADATA_RESPONSE = 14;
+    GET_ATTACHMENT_PAYLOAD_REQUEST = 15;
+    GET_ATTACHMENT_PAYLOAD_RESPONSE = 16;
+    GET_ATTACHMENT_PAYLOAD_BY_TYPE_REQUEST = 17;
+    GET_ATTACHMENT_PAYLOAD_BY_TYPE_RESPONSE = 18;
+    DOCUMENT_REFERENCE_RECREATE_MESSAGE = 19;
+    DOCUMENT_SERVICE_ERROR_REPLY = 20;
+    DOCUMENT_SERVICE_ERROR_RESPONSE = 21;
+}
+
+enum Direction {
+    SENT = 0;
+    RECEIVED = 1;
+}
+
+enum Action {
+    CREATED = 0;
+    RESTARTED = 1;
+    DELETED = 3;
+}
+
+enum ErrorCode {
+    CREATION_FAILURE = 0;
+    CANNOT_FIND_REFERENCES = 1;
+}
+
+enum FilterType {
+    INTERNAL_INTERCHANGE_ID = 0;
+    DISTRIBUTION_TYPE = 1;
+    AUTH_COMPANY_ID = 2;
+    DIRECTION = 3;
+    SEND_TYPE = 4;
+    DOCUMENT_TYPE = 5;
+    SUB_TYPE = 6;
+    REFERENCE_DOCUMENT_IDENTIFIER = 7;
+
+}
+
+enum SortingType {
+    INTERNAL_INTERCHANGE_ID = 0;
+    DOCUMENT_DATE = 1;
+    DOCUMENT_DUE_DATE = 2;
+    CREATE_TIME_MESSAGE_SERVICE = 3;
+}
+
+enum RangeType {
+    DOCUMENT_DATE = 0;
+    DOCUMENT_DUE_DATE = 1;
+    CREATE_TIME_MESSAGE_SERVICE = 2;
+}
+
+message Meta {
+    optional int32 offset = 1;
+    optional int32 limit = 2;
+    optional int32 count = 3;
+    optional int32 total = 4;
+}
+
+message Filter {
+    optional FilterType filterType = 1;
+    optional string value = 2;
+}
+
+message Range {
+    optional RangeType rangeType = 1;
+    optional string from = 2;
+    optional string to = 3;
+}
+
+message Sort {
+    optional SortingType sortingType = 1;
+    optional bool ascending = 2;
+}
+
+message Event {
+    optional Action action = 1;
+    optional string user = 2;
+    optional Timestamp time = 3;
+}
+
+message StorageDocument {
+    optional Document document = 1;
+    optional Customer customer = 2;
+    optional RoutingInfo routingInfo = 3;
+    optional Direction direction = 4;
+    optional string fileName = 5;
+    optional Timestamp createTimeDocumentService = 6;
+    optional StorageId targetDocumentStorageId = 7;
+    optional StorageId sourceDocumentStorageId = 8;
+    optional StorageId internalFormatStorageId = 9;
+    repeated Event events = 10;
+}
+
+message CreateDocumentMessage {
+    optional StorageDocument document = 1;
+    optional string messageId = 2;
+}
+
+message CreateDocumentReply {
+    optional string successMessage = 1;
+    optional string failMessage = 2;
+}
+
+message CreateDocumentEventMessage {
+    optional string authCompanyId = 1;
+    optional string documentIdentifier = 2;
+    optional ResourceId senderPartyResourceId = 3;
+    optional ResourceId receiverPartyResourceId = 4;
+    optional Event event = 5;
+}
+
+message CreateDocumentEventReply {
+    optional string message = 1;
+}
+
+message SearchDocumentMessage {
+    optional SearchDocumentDetail detail = 1;
+}
+
+message SearchDocumentReply {
+    optional SearchDocumentResultDetail detail = 1;
+}
+
+message SearchDocumentRequest {
+    optional SearchDocumentDetail detail = 1;
+}
+
+message SearchDocumentResponse {
+    optional SearchDocumentResultDetail detail = 1;
+}
+
+message GetDocumentRequest {
+    optional GetDocumentDetail detail = 1;
+}
+
+message GetDocumentResponse {
+    optional GetDocumentResultDetail detail = 1;
+}
+
+
+message GetDocumentPayloadRequest {
+    optional GetDocumentDetail detail = 1;
+}
+
+message GetDocumentPayloadResponse {
+    optional PayloadDetail detail = 1;
+}
+
+message GetAttachmentPayloadByTypeRequest {
+    optional AttachmentByTypeDetail detail = 1;
+}
+
+message GetAttachmentPayloadByTypeResponse {
+    optional PayloadDetail payload = 1;
+}
+
+message GetAttachmentMetadataRequest {
+    optional GetAttachmentDetail detail = 1;
+}
+
+message GetAttachmentMetadataResponse {
+    optional Attachment attachment = 1;
+}
+
+message GetAttachmentPayloadRequest {
+    optional GetAttachmentDetail detail = 1;
+}
+
+message GetAttachmentPayloadResponse {
+    optional PayloadDetail attachment = 1;
+}
+
+message SearchDocumentDetail {
+    repeated string authCompanyIds = 1;
+    optional Meta meta = 2;
+    repeated Filter filter = 3;
+    repeated Sort sort = 4;
+    repeated Range ranges = 5;
+    optional string searchTerm = 6;
+}
+
+message SearchDocumentResultDetail {
+    optional Meta meta = 1;
+    repeated StorageDocument documents = 2;
+}
+
+message GetDocumentDetail {
+    repeated string authCompanyId = 1;
+    optional string internalInterchangeId = 2;
+}
+
+message GetDocumentResultDetail {
+    optional StorageDocument document = 1;
+}
+
+message PayloadDetail {
+    optional bytes payload = 1;
+    optional string fileName = 2;
+}
+
+message AttachmentByTypeDetail {
+    repeated string authCompanyId = 1;
+    optional string internalInterchangeId = 2;
+    optional string attachmentType = 3;
+}
+
+message GetAttachmentDetail {
+    repeated string authCompanyId = 1;
+    optional string attachmentId = 2;
+}
+
+message DocumentReferenceRecreateMessage {
+    optional string documentStorageId = 1;
+    optional string authCompanyId = 2;
+    optional string documentIdentifier = 3;
+    optional ResourceId senderPartyResourceId = 4;
+    optional ResourceId receiverPartyResourceId = 5;
+    repeated DocumentReferenceInfo references = 6;
+}
+
+message DocumentReferenceInfo {
+    optional string documentIdentifier = 1;
+    optional ResourceId senderPartyResourceId = 2;
+    optional ResourceId receiverPartyResourceId = 3;
+}
+
+message DocumentServiceErrorResponse {
+    optional ErrorDetail errorDetail = 1;
+}
+
+message DocumentServiceErrorReply {
+    optional ErrorDetail errorDetail = 1;
+}
+
+message ErrorDetail {
+    optional ErrorCode errorCode = 1;
+    optional string errorMessage = 2;
+}
