@@ -14,5 +14,5 @@ spec:
   owner: ${{values.owner | dump}}
   {%- if values.providesApi %}
   providesApis:
-    - ${{values.providesApi | dump}}
+    - component:${{values.providesApi | dump}}
   {%- endif %}
