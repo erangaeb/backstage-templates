@@ -14,7 +14,7 @@ spec:
   lifecycle: experimental
   owner: ${{values.owner | dump}}
   {%- if values.providesApi %}
-  $apis := split "," ${{ values.providesApi }}
+  { $apis := split "," ${{ values.providesApi }} }
   providesApis:
     {{ range $api := .apis }}
     - component:${{api | dump}}
