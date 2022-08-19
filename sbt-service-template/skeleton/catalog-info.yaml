@@ -15,7 +15,7 @@ spec:
   owner: ${{values.owner | dump}}
   {%- if values.providesApi %}
   providesApis:
-    {%- for api in values.providesApi.split(";") %}
+    {%- for api in values.providesApi.split(",") %}
     - ${{api | dump}}
     {%- endfor %}
   {%- endif %}
