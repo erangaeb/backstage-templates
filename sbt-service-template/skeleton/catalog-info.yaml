@@ -12,11 +12,11 @@ metadata:
 spec:
   type: service
   lifecycle: experimental
-  owner: {{values.owner}}
-  {{- if values.providesApi }}
-  {{- $apis := strings.Split "," values.providesApi}}
+  owner: ${{values.owner | dump}}
+  {%- if values.providesApi %}
+  {% set apis = values.providesApi(';') %}
   providesApis:
-    {{- range $api := $apis }}
-    - component: {{$api}}
-    {{ end }}
-  {{ end }}
+    {% for api in values.providesApi|split(";") %}
+    - component: ${{api | dump}}
+    {% endfor %}
+  {%- endif %}
