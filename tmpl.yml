@@ -1,0 +1,23 @@
+spec:
+  type: service
+  lifecycle: experimental
+  {{- if (datasource "config").values.owner }}
+  {{- $apis := strings.Split "," "eranga,bandara" }}
+  {{printf "list elements: %v" $apis}}
+  provide:
+    {{- range $api := $apis }}
+    {{$api}}
+    {{ end }}
+  {{ end }}
+
+spec:
+  type: service
+  lifecycle: experimental
+  owner: {{(datasource "config").values.owner}}
+  {{- if (datasource "config").values.providesApi }}
+  {{- $apis := strings.Split "," (datasource "config").values.providesApi}}
+  providesApis:
+    {{- range $api := $apis }}
+    - component: {{$api}}
+    {{ end }}
+  {{ end }}
